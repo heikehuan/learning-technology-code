@@ -1,5 +1,7 @@
 # springmvc-servlet3-helloworld
 
+#### 通过springmvc+servlet3.0实现真正的零配置文件，没有web.xml和ApplicationContet.xml配置文件，全部使用注解
+
 这里对SpringMVC零配置做一个简单的说明
 
 spring4中提供了大量的注解来支持零配置，简要说明如下：
