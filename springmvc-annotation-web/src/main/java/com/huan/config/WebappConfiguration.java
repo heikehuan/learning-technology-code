@@ -15,6 +15,9 @@ import javax.servlet.ServletRegistration;
 
 public class WebappConfiguration implements WebApplicationInitializer {
 
+    /**
+     * 配置springmvc
+     */
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.scan("com.huan.config");

@@ -5,10 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
@@ -24,7 +21,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
         FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-        configurer.setTemplateLoaderPath("/html/");
+        configurer.setTemplateLoaderPath("/templates/");
         configurer.setDefaultEncoding("UTF-8");
         return configurer;
     }
@@ -44,12 +41,23 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.ignoreUnknownPathExtensions(false).defaultContentType(MediaType.TEXT_HTML);
+        configurer.ignoreUnknownPathExtensions(false);
+        configurer.defaultContentType(MediaType.TEXT_HTML);
     }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.freeMarker();
+    }
+
+    /**
+     * 加载静态资源文件
+     */
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        registry.addResourceHandler("/images/**").addResourceLocations("/images/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
     }
 
 }
