@@ -60,18 +60,21 @@ public class MainPageController {
     }
 
     @RequestMapping(value = {"new", "new.html"}, method = RequestMethod.GET)
-    public String newArticle() {
-        return "new";
+    public ModelAndView newArticle() {
+        ModelAndView modelAndView = new ModelAndView("new");
+        return modelAndView;
     }
 
     @RequestMapping(value = {"newlist", "newlist.html"}, method = RequestMethod.GET)
-    public String newArticleList() {
-        return "newlist";
+    public ModelAndView newArticleList() {
+        ModelAndView modelAndView = new ModelAndView("newlist");
+        return modelAndView;
     }
 
     @RequestMapping(value = {"share", "share.html"}, method = RequestMethod.GET)
-    public String share() {
-        return "share";
+    public ModelAndView share() {
+        ModelAndView modelAndView = new ModelAndView("share");
+        return modelAndView;
     }
 
     @ResponseBody
