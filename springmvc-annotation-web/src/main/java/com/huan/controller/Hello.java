@@ -15,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/")
 public class Hello {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public Map view() {
         Map map = new HashMap<>();
         map.put("id", 123);
