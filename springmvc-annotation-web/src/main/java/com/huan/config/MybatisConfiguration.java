@@ -22,7 +22,7 @@ import java.io.IOException;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:datasource.properties")
-@MapperScan("com.huan.**.mapper")
+@MapperScan("com.huan.**.mapper") //扫描跑mapper包下的所有接口，作为mybatis接口类，并注册为spring的bean
 public class MybatisConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(MybatisConfiguration.class);
@@ -86,17 +86,5 @@ public class MybatisConfiguration {
         sessionFactory.setTypeAliasesPackage("com.huan.**.model");
         return sessionFactory;
     }
-
-    /**
-     * 扫描跑mapper包下的所有接口，作为mybatis接口类，并注册为spring的bean
-     */
-    /*@Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
-        scannerConfigurer.setAddToConfig(true);
-        scannerConfigurer.setBasePackage("com.huan.**.mapper");
-        return scannerConfigurer;
-    }*/
-
 
 }

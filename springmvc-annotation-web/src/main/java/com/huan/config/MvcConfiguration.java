@@ -4,10 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:huanhuan.zhan@ptthink.com">詹欢欢</a>
@@ -18,31 +23,42 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @ComponentScan(basePackages = "com.huan")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public FreeMarkerConfigurer freeMarkerConfigurer() {
-        FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-        configurer.setTemplateLoaderPath("/templates/");
-        configurer.setDefaultEncoding("UTF-8");
-        return configurer;
-    }
-
-    @Bean
-    public ViewResolver freeMarkerViewResolver() {
-        FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
-        viewResolver.setCache(true);
-        viewResolver.setPrefix("");
-        viewResolver.setSuffix(".html");
-        viewResolver.setContentType("text/html;charset=UTF-8");
-        viewResolver.setExposeSpringMacroHelpers(true);
-        viewResolver.setExposeRequestAttributes(false);
-        viewResolver.setExposeSessionAttributes(false);
-        return viewResolver;
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(this.stringHttpMessageConverter());
+        converters.add(this.mappingJackson2HttpMessageConverter());
     }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.ignoreUnknownPathExtensions(false);
         configurer.defaultContentType(MediaType.TEXT_HTML);
+        configurer.ignoreUnknownPathExtensions(false);
+        configurer.favorPathExtension(true);
+        configurer.favorParameter(false);
+        Map<String, MediaType> mediaTypes = new HashMap<>();
+        mediaTypes.put("atom", MediaType.APPLICATION_ATOM_XML);
+        mediaTypes.put("html", MediaType.TEXT_HTML);
+        mediaTypes.put("json", MediaType.APPLICATION_JSON);
+        configurer.mediaTypes(mediaTypes);
+    }
+
+    @Bean
+    public StringHttpMessageConverter stringHttpMessageConverter() {
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+        return stringHttpMessageConverter;
+    }
+
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.APPLICATION_JSON);
+        list.add(MediaType.APPLICATION_XML);
+        list.add(MediaType.TEXT_HTML);
+        list.add(MediaType.TEXT_PLAIN);
+        list.add(MediaType.TEXT_XML);
+        messageConverter.setSupportedMediaTypes(list);
+        return messageConverter;
     }
 
     @Override

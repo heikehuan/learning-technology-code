@@ -26,11 +26,15 @@ package com.huan.controller;
 
 import com.huan.model.UserInfo;
 import com.huan.service.MainPageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -38,8 +42,9 @@ import java.util.List;
 /**
  * @author zhanhuanhuan
  */
-@RestController
+@Controller
 public class MainPageController {
+    private static final Logger logger = LoggerFactory.getLogger(MainPageController.class);
 
     @Autowired
     private MainPageService mainPageService;
@@ -53,33 +58,40 @@ public class MainPageController {
     }
 
     @RequestMapping(value = {"about", "about.html"}, method = RequestMethod.GET)
-    public ModelAndView about() {
-        ModelAndView modelAndView = new ModelAndView("about");
-        modelAndView.addObject("name", "huanhuan");
-        return modelAndView;
+    public String about(ModelMap modelMap) {
+        modelMap.put("name", "huanhuan");
+        return "about";
     }
 
     @RequestMapping(value = {"new", "new.html"}, method = RequestMethod.GET)
-    public ModelAndView newArticle() {
-        ModelAndView modelAndView = new ModelAndView("new");
-        return modelAndView;
+    public String newArticle() {
+        return "new";
     }
 
     @RequestMapping(value = {"newlist", "newlist.html"}, method = RequestMethod.GET)
-    public ModelAndView newArticleList() {
-        ModelAndView modelAndView = new ModelAndView("newlist");
-        return modelAndView;
+    public String newArticleList() {
+        return "newlist";
     }
 
     @RequestMapping(value = {"share", "share.html"}, method = RequestMethod.GET)
-    public ModelAndView share() {
-        ModelAndView modelAndView = new ModelAndView("share");
-        return modelAndView;
+    public String share() {
+        return "share";
     }
 
+    @RequestMapping(value = "test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public
     @ResponseBody
-    @RequestMapping(value = "test", method = RequestMethod.GET, produces = "application/json")
-    public List<UserInfo> selectAll() {
+    List<UserInfo> selectAll() {
         return mainPageService.selectAll();
+    }
+
+    @RequestMapping("logtest")
+    public
+    @ResponseBody
+    void logtest() {
+        logger.debug("------------debug test ");
+        logger.info("------------info test ");
+        logger.warn("------------warn test ");
+        logger.error("error test message", new Exception("Testing"));
     }
 }
