@@ -79,16 +79,12 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public
-    @ResponseBody
-    List<UserInfo> selectAll() {
+    public @ResponseBody List<UserInfo> selectAll() {
         return mainPageService.selectAll();
     }
 
     @RequestMapping("logtest")
-    public
-    @ResponseBody
-    void logtest() {
+    public @ResponseBody void logtest() {
         logger.debug("------------debug test ");
         logger.info("------------info test ");
         logger.warn("------------warn test ");
