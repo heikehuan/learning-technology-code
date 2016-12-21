@@ -4,7 +4,7 @@ import com.example.bean.UserBean;
 import com.example.service.BusinessService;
 
 /**
- * Created by ptmind on 2016/12/21.
+ * Created by zhanhuanhuan on 2016/12/21.
  */
 public class WorkTread implements Runnable {
 
