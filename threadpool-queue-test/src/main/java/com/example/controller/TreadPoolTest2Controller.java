@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by ptmind on 2016/12/21.
+ * Created by zhanhuanhuan on 2016/12/21.
  */
 @Controller
 public class TreadPoolTest2Controller {

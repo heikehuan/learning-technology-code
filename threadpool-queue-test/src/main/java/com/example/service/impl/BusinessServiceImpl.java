@@ -6,7 +6,7 @@ import com.example.service.BusinessService;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by ptmind on 2016/12/21.
+ * Created by zhanhuanhuan on 2016/12/21.
  */
 @Service
 public class BusinessServiceImpl implements BusinessService {
